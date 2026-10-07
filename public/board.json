@@ -1,0 +1,126 @@
+{
+  "items": [
+    {
+      "id": "chatgpt",
+      "title": "ChatGPT",
+      "content": "\u25ce",
+      "x": 485,
+      "y": 200,
+      "cluster": "AI systems",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "claude",
+      "title": "Claude",
+      "content": "\u2733",
+      "x": 435,
+      "y": 335,
+      "cluster": "AI systems",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "hal",
+      "title": "HAL 9000",
+      "content": "HAL 9000\n\ud83d\udd34",
+      "x": 700,
+      "y": 440,
+      "cluster": "AI systems",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "gemini",
+      "title": "Gemini",
+      "content": "\u2726",
+      "x": 925,
+      "y": 460,
+      "cluster": "AI systems",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "clippy",
+      "title": "Clippy",
+      "content": "\ud83d\udcce",
+      "x": 480,
+      "y": 530,
+      "cluster": "Assistants",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "surveillance",
+      "title": "Watching & being watched",
+      "content": "\u25c9",
+      "x": 1140,
+      "y": 585,
+      "cluster": "Surveillance",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "question",
+      "title": "A thought from the board",
+      "content": "I have no \u2026 and I must \u2026",
+      "x": 175,
+      "y": 495,
+      "cluster": "Questions",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    },
+    {
+      "id": "belief",
+      "title": "I want to believe",
+      "content": "AI WANT TO BELIEVE",
+      "x": 135,
+      "y": 190,
+      "cluster": "Questions",
+      "kind": "note",
+      "name": "Not recorded",
+      "date": "Not recorded",
+      "reason": "From the physical board. Original contributor and context have not been entered yet."
+    }
+  ],
+  "connections": [
+    [
+      "chatgpt",
+      "hal"
+    ],
+    [
+      "claude",
+      "hal"
+    ],
+    [
+      "hal",
+      "gemini"
+    ],
+    [
+      "hal",
+      "clippy"
+    ],
+    [
+      "hal",
+      "surveillance"
+    ],
+    [
+      "question",
+      "hal"
+    ]
+  ]
+}

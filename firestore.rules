@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function teacher() {
+      return request.auth != null &&
+        exists(/databases/$(database)/documents/settings/access) &&
+        request.auth.uid in get(/databases/$(database)/documents/settings/access).data.teacherUids;
+    }
+    function validItem(d) {
+      return d.keys().hasAll(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt']) &&
+        d.title is string && d.title.size() > 0 && d.title.size() <= 120 &&
+        d.name is string && d.name.size() > 0 && d.name.size() <= 80 &&
+        d.reason is string && d.reason.size() > 0 && d.reason.size() <= 2000 &&
+        d.cluster is string && d.cluster.size() <= 80 &&
+        d.date is string && d.date.size() <= 30 &&
+        d.x is number && d.x >= 100 && d.x <= 1300 &&
+        d.y is number && d.y >= 100 && d.y <= 850 &&
+        d.links is list && d.links.size() <= 20 && d.createdAt is timestamp &&
+        d.content is string && d.content.size() > 0 &&
+        ((d.kind == 'note' && d.content.size() <= 4000) ||
+         (d.kind == 'link' && d.content.size() <= 2000 && d.content.matches('https?://[^\\s]+')) ||
+         (d.kind == 'image' && d.content.size() <= 200000 && d.content.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+')));
+    }
+    match /settings/access {
+      allow get: if teacher();
+      allow list, write: if false;
+    }
+    match /submissions/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt']) &&
+        validItem(request.resource.data) && request.resource.data.createdAt == request.time;
+      allow read, delete: if teacher();
+      allow update: if false;
+    }
+    match /published/{id} {
+      allow read: if true;
+      allow create, update: if teacher() && validItem(request.resource.data) &&
+        request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt','approvedAt']) &&
+        request.resource.data.approvedAt == request.time;
+      allow delete: if teacher();
+    }
+  }
+}
