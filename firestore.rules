@@ -31,6 +31,18 @@ service cloud.firestore {
       allow read, delete: if teacher();
       allow update: if false;
     }
+    match /layouts/main {
+      allow read: if true;
+      allow create, update: if teacher() &&
+        request.resource.data.keys().hasOnly(['transforms','strings','clusters','hidden','knownIds','updatedAt']) &&
+        request.resource.data.transforms is map && request.resource.data.transforms.size() <= 200 &&
+        request.resource.data.strings is list && request.resource.data.strings.size() <= 500 &&
+        request.resource.data.clusters is list && request.resource.data.clusters.size() <= 100 &&
+        request.resource.data.hidden is list && request.resource.data.hidden.size() <= 400 &&
+        request.resource.data.knownIds is list && request.resource.data.knownIds.size() <= 200 &&
+        request.resource.data.updatedAt == request.time;
+      allow delete: if teacher();
+    }
     match /published/{id} {
       allow read: if true;
       allow create, update: if teacher() && validItem(request.resource.data) &&

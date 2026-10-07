@@ -21,5 +21,5 @@ export function mergeBoard(seed, published) {
   for (const item of published) if(validContent(item.kind,item.content)) items.set(item.id,item);
   const connections=seed.connections.filter(pair=>pair.every(id=>items.has(id)));
   for(const item of published) for(const id of item.links||[]) if(id!==item.id && items.has(id) && !connections.some(pair=>pair.includes(id)&&pair.includes(item.id)))connections.push([item.id,id]);
-  return {items:[...items.values()],connections};
+  return {items:[...items.values()],connections,clusters:seed.clusters||[],...(seed.strings?{strings:seed.strings}:{})};
 }
