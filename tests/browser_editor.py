@@ -62,16 +62,27 @@ with sync_playwright() as p:
  page.locator('#publish').click();assert 'not connected' in page.locator('#publishStatus').inner_text();page.locator('#publishDialog .close').click()
  page.screenshot(path='/tmp/redstring-editor.png')
  # Serve the edited board as seed plus layout to exercise public clustering.
- edited=state['board'];edited['connections']=[[s['from'],s['to']] for s in edited['strings']]
+ state=json.loads(page.evaluate("localStorage.getItem('redstring-editor-v1')"));edited=state['board'];edited['connections']=[[s['from'],s['to']] for s in edited['strings']]
  page.route('**/board.json',lambda route:route.fulfill(content_type='application/json',body=json.dumps(edited)))
  page.goto(os.environ.get('BOARD_TEST_URL','http://localhost:3200/redstring/'))
  page.locator('#welcome').wait_for(state='visible');page.locator('#enterBoard').click()
  page.get_by_role('button',name='Claude',exact=True).click()
- assert 'Thinking machines' in page.locator('#detailContent').inner_text()
+ assert not page.locator('#detailContent h2').is_visible()
  page.locator('#flip').click();assert 'Shared cluster context' in page.locator('#detailContent').inner_text()
  page.locator('#flip').click();page.locator('.cluster-gallery button').filter(has_text='Claude').click()
- assert 'Claude' in page.locator('#detailContent h2').inner_text()
+ assert not page.locator('#detailContent h2').is_visible()
  page.locator('#flip').click();assert 'Added by' in page.locator('#detailContent').inner_text()
+ # Real uploaded photos must be visible on the front and absent on the reverse.
+ page.locator('#detail .close').click()
+ page.get_by_role('button',name='Watching & being watched',exact=True).click()
+ assert page.locator('#detailContent > img').is_visible()
+ assert not page.locator('#detailContent h2').is_visible()
+ assert 'Added by' not in page.locator('#detailContent').inner_text()
+ page.locator('#flip').click()
+ assert page.locator('#detailContent > img').count()==0
+ assert 'Added by' in page.locator('#detailContent').inner_text()
+ page.locator('#flip').click()
+ assert page.locator('#detailContent > img').is_visible()
  assert not errors,errors
  print('Browser passed: rotation, resizing, drag, PNG transparency format, cluster creation, edge strings, draft restoration, publish gating, welcome and combined/individual flips.')
  browser.close()
