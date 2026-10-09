@@ -36,6 +36,28 @@ with sync_playwright() as p:
  state=json.loads(page.evaluate("localStorage.getItem('redstring-editor-v1')"))
  assert len(state['board']['strings'])==7
  anchor=state['board']['strings'][-1]['a'];assert abs(max(abs(anchor['x']),abs(anchor['y']))-.5)<.001
+ # Replace a sample image without losing its identity or strings.
+ page.locator('#connect').click()
+ page.locator('[data-id=surveillance]').click()
+ before=json.loads(page.evaluate("localStorage.getItem('redstring-editor-v1')"))
+ page.locator('#replaceImage').set_input_files({'name':'camera.png','mimeType':'image/png','buffer':base64.b64decode(image)})
+ page.wait_for_function("document.querySelector('[data-id=surveillance] img')!==null")
+ after=json.loads(page.evaluate("localStorage.getItem('redstring-editor-v1')"))
+ assert after['board']['strings']==before['board']['strings']
+ assert next(i for i in after['board']['items'] if i['id']=='surveillance')['x']==next(i for i in before['board']['items'] if i['id']=='surveillance')['x']
+ # Cork uploads persist with layout and can be reset.
+ page.locator('.background-settings summary').click()
+ page.locator('#backgroundFile').set_input_files({'name':'cork.png','mimeType':'image/png','buffer':base64.b64decode(image)})
+ page.wait_for_function("JSON.parse(localStorage.getItem('redstring-editor-v1')).board.surface?.startsWith('data:image/png')")
+ page.locator('#resetBackground').click()
+ # Local previews use edited content without publishing.
+ with page.expect_popup() as popup_info:
+  page.locator('#previewBoard').click()
+ preview=popup_info.value
+ preview.locator('#draftReturn').wait_for(state='visible')
+ assert preview.locator('.card').count()==9
+ assert not preview.locator('#add').is_visible()
+ preview.close()
  page.reload();page.locator('.edit-card').first.wait_for();assert page.locator('.edit-card').count()==9
  page.locator('#publish').click();assert 'not connected' in page.locator('#publishStatus').inner_text();page.locator('#publishDialog .close').click()
  page.screenshot(path='/tmp/redstring-editor.png')

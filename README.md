@@ -46,3 +46,12 @@ Changes autosave locally when browser storage permits, with undo/redo and downlo
 The public site now shows a short welcome once per tab/session and opens the board after five seconds. Visitors can enter immediately. Adjust text/duration in `public/welcome.json`. To use Charlie's actual recording, upload it under `public/audio/charlie.mp3` through GitHub, then set `audio` in `welcome.json` to `./audio/charlie.mp3`. No recording is bundled yet. When audio is configured, visitors choose **Listen to Charlie** (browser audio requires a click), then the board opens when the recording ends; **Enter the board** always skips it.
 
 Submissions capture student name, image/link/text, reason, chosen connections and draft placement. Firebase's `createdAt` server timestamp records submission time; the review queue displays it. Only approved submissions appear publicly.
+
+
+## Physical-board appearance
+
+The viewer and studio now share a wide 2:1 framed cork surface. Cork, image shadows, edge pins, and red thread all move with the camera. The built-in cork is an approximation; the supplied photographs are visual references, not embedded as a photographic backdrop. The seed images remain placeholders. The photo-inspired seed positions and varied sizes leave the same kind of open space as the physical board.
+
+For saved older drafts, use **Match photo spacing** in the studio to apply the new seed-image positions/sizes. This is undoable and keeps image content, other uploads and existing strings. **Replace image** swaps a selected placeholder for its actual PNG while preserving identity, position, rotation and string anchors. **Preview board** opens the current local draft in a separate tab, clearly marked as private, without publishing. Existing local drafts are preserved rather than automatically rearranged.
+
+The built-in background needs no upload or Firebase change. Under **Board background**, you can optionally upload a clean photograph of cork (without pictures or strings), or return to the built-in surface. A custom background is saved with the layout when you publish; copy the updated complete `firestore.rules` to Firebase before publishing one, since the layout rules now allow the optional `surface` field. The surface image is fitted across the board, while the built-in cork texture repeats. Original image cutouts and precise teacher arrangement are still needed for a close 1:1 reproduction.

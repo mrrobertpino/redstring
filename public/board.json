@@ -4,97 +4,121 @@
       "id": "chatgpt",
       "title": "ChatGPT",
       "content": "\u25ce",
-      "x": 485,
-      "y": 200,
+      "x": 480,
+      "y": 155,
       "cluster": "AI systems",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 55,
+      "height": 55,
+      "rotation": -5
     },
     {
       "id": "claude",
       "title": "Claude",
-      "content": "\u2733",
+      "content": "\u273a",
       "x": 435,
-      "y": 335,
+      "y": 253,
       "cluster": "AI systems",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 68,
+      "height": 68,
+      "rotation": 7
     },
     {
       "id": "hal",
       "title": "HAL 9000",
       "content": "HAL 9000\n\ud83d\udd34",
       "x": 700,
-      "y": 440,
+      "y": 310,
       "cluster": "AI systems",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 65,
+      "height": 185,
+      "rotation": 2
     },
     {
       "id": "gemini",
       "title": "Gemini",
       "content": "\u2726",
-      "x": 925,
-      "y": 460,
+      "x": 920,
+      "y": 345,
       "cluster": "AI systems",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 60,
+      "height": 60,
+      "rotation": -10
     },
     {
       "id": "clippy",
       "title": "Clippy",
       "content": "\ud83d\udcce",
       "x": 480,
-      "y": 530,
+      "y": 388,
       "cluster": "Assistants",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 44,
+      "height": 64,
+      "rotation": 12
     },
     {
       "id": "surveillance",
       "title": "Watching & being watched",
       "content": "\u25c9",
       "x": 1140,
-      "y": 585,
+      "y": 442,
       "cluster": "Surveillance",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 52,
+      "height": 82,
+      "rotation": -2
     },
     {
       "id": "question",
       "title": "A thought from the board",
-      "content": "I have no \u2026 and I must \u2026",
-      "x": 175,
-      "y": 495,
+      "content": "I have no \u2026\nand I must \u2026",
+      "x": 160,
+      "y": 360,
       "cluster": "Questions",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 72,
+      "height": 44,
+      "rotation": 1
     },
     {
       "id": "belief",
       "title": "I want to believe",
       "content": "AI WANT TO BELIEVE",
-      "x": 135,
-      "y": 190,
+      "x": 100,
+      "y": 116,
       "cluster": "Questions",
       "kind": "note",
       "name": "Not recorded",
       "date": "Not recorded",
-      "reason": "From the physical board. Original contributor and context have not been entered yet."
+      "reason": "From the physical board. Original contributor and context have not been entered yet.",
+      "width": 112,
+      "height": 176,
+      "rotation": 1
     }
   ],
   "connections": [
@@ -122,5 +146,85 @@
       "question",
       "hal"
     ]
+  ],
+  "strings": [
+    {
+      "id": "photo-0",
+      "from": "chatgpt",
+      "to": "hal",
+      "a": {
+        "x": 0.4,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": -0.3
+      }
+    },
+    {
+      "id": "photo-1",
+      "from": "claude",
+      "to": "hal",
+      "a": {
+        "x": 0.4,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": -0.3
+      }
+    },
+    {
+      "id": "photo-2",
+      "from": "hal",
+      "to": "gemini",
+      "a": {
+        "x": 0.5,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": 0.3
+      }
+    },
+    {
+      "id": "photo-3",
+      "from": "hal",
+      "to": "clippy",
+      "a": {
+        "x": 0.5,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": 0.3
+      }
+    },
+    {
+      "id": "photo-4",
+      "from": "hal",
+      "to": "surveillance",
+      "a": {
+        "x": 0.5,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": 0.3
+      }
+    },
+    {
+      "id": "photo-5",
+      "from": "question",
+      "to": "hal",
+      "a": {
+        "x": 0.4,
+        "y": 0.4
+      },
+      "b": {
+        "x": -0.5,
+        "y": -0.3
+      }
+    }
   ]
 }
