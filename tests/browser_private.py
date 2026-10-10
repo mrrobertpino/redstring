@@ -27,7 +27,7 @@ with sync_playwright() as p:
  fresh=other.new_page();fresh.goto(url);fresh.locator('.card').first.wait_for();assert fresh.locator('.private-item').count()==0
  page.locator('#viewTab').click();page.locator('#splay').click();assert page.locator('#splay').inner_text()=='Fold back';page.locator('#splay').click()
  page.locator('#sideboard summary').click();assert page.locator('#sideboardForm').is_hidden()
- assert page.locator('.copyright').inner_text()=='© Robert Pino · robertpino.com'
+ assert page.locator('.copyright').inner_text()=='© Robert Pino * robertpino.com'
  page.set_viewport_size({'width':390,'height':844});assert page.locator('#addText').bounding_box()['y']<150
  page.locator('#addText').click();page.locator('#form [name=name]').fill('Phone student');page.locator('#form [name=content]').fill('Simple mobile idea');page.locator('#preview').click();page.locator('.private-item').nth(2).wait_for();assert page.locator('#placementBar').is_hidden()
  assert not errors,errors
