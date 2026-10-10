@@ -12,7 +12,7 @@ export function validateSubmission(item) {
   }
   if (!validContent(item.kind,item.content)) throw Error('Use a valid note, http/https link, or supported image.');
   if (typeof item.cluster !== 'string' || item.cluster.length > 80) throw Error('Cluster names must be 80 characters or fewer.');
-  if (!Number.isFinite(item.x) || !Number.isFinite(item.y) || item.x < 100 || item.x > 1300 || item.y < 100 || item.y > 850) throw Error('Place your draft within the board.');
+  if (!Number.isFinite(item.x) || !Number.isFinite(item.y) || item.x < 0 || item.x > 1400 || item.y < 0 || item.y > 850) throw Error('Place your draft within the board.');
   if (!Array.isArray(item.links) || item.links.length > 20 || item.links.some(id => typeof id !== 'string' || id.length > 100)) throw Error('Choose up to 20 connections.');
   return item;
 }
