@@ -11,3 +11,5 @@
 #cards{z-index:auto}.card{z-index:2}.card.private-item{z-index:4}
 
 #placementBar{position:absolute;bottom:105px;left:50%;transform:translateX(-50%);z-index:15;background:#faf7ed;padding:12px 18px;border-radius:8px;box-shadow:0 4px 20px #342d2455;font-size:13px;display:flex;gap:14px;align-items:center;max-width:90%}#placementBar button{white-space:nowrap;font-size:12px}
+
+#world.splayed{background:none!important;box-shadow:none!important}#world.splayed:before,#world.splayed:after{display:none}#viewport.splayed{background:#27343d;background-image:radial-gradient(ellipse at center,#455963,#202c34);box-shadow:none}#viewport.splayed .copyright{color:#faf7ed}#viewport.splayed .legend{background:#faf7eddd}
