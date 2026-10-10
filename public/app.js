@@ -1,9 +1,9 @@
-import {additionEvents,atAddition,splayBoard,fitSplay,timeValue} from './explore.js?v=20261010-5';
-import {initializePins,orderedStrings,pinPosition} from './pins.js?v=20261010-5';
-import {surface,fitScene,appendThread} from './scene.js?v=20261010-5';
-import {dimensions,anchorPoint,bounds,applyLayout} from './geometry.js?v=20261010-5';
-import * as firebase from './firebase.js?v=20261010-5';
-import {mergeBoard,validateSubmission,validContent} from './model.js?v=20261010-5';
+import {additionEvents,atAddition,splayBoard,fitSplay,timeValue} from './explore.js?v=20261010-6';
+import {initializePins,orderedStrings,pinPosition} from './pins.js?v=20261010-6';
+import {surface,fitScene,appendThread} from './scene.js?v=20261010-6';
+import {dimensions,anchorPoint,bounds,applyLayout} from './geometry.js?v=20261010-6';
+import * as firebase from './firebase.js?v=20261010-6';
+import {mergeBoard,validateSubmission,validContent} from './model.js?v=20261010-6';
 const $=s=>document.querySelector(s),world=$('#world'),viewport=$('#viewport');let board,scale=1,tx=0,ty=0,selected,back=false,draft=null,seed,published=[],layout=null,selectedGroup=null,canonical=null,events=[],timelineCount=null,splayed=false,focused=false,navigation=0;let placingItem=null,placementTimer=null;let connectingItem=null;let privateItems=[],localItems=[],privateStop=null;try{localItems=JSON.parse(localStorage.getItem('redstring-private-drafts')||'[]')}catch{}const previewMode=new URLSearchParams(location.search).get('preview')==='local';if(previewMode)localItems=[];
 const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n};
 function transform(){world.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`}
