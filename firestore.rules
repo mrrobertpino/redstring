@@ -34,13 +34,15 @@ service cloud.firestore {
     match /layouts/main {
       allow read: if true;
       allow create, update: if teacher() &&
-        request.resource.data.keys().hasOnly(['transforms','strings','clusters','hidden','knownIds','updatedAt','surface']) &&
+        request.resource.data.keys().hasOnly(['transforms','strings','clusters','hidden','knownIds','updatedAt','surface','pins','toolUi']) &&
         request.resource.data.transforms is map && request.resource.data.transforms.size() <= 200 &&
         request.resource.data.strings is list && request.resource.data.strings.size() <= 500 &&
         request.resource.data.clusters is list && request.resource.data.clusters.size() <= 100 &&
         request.resource.data.hidden is list && request.resource.data.hidden.size() <= 400 &&
         request.resource.data.knownIds is list && request.resource.data.knownIds.size() <= 200 &&
         (!('surface' in request.resource.data) || (request.resource.data.surface is string && request.resource.data.surface.size() <= 200000 && request.resource.data.surface.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+'))) &&
+        (!('pins' in request.resource.data) || (request.resource.data.pins is list && request.resource.data.pins.size() <= 1500)) &&
+        (!('toolUi' in request.resource.data) || request.resource.data.toolUi is map) &&
         request.resource.data.updatedAt == request.time;
       allow delete: if teacher();
     }
