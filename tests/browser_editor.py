@@ -56,7 +56,7 @@ with sync_playwright() as p:
  preview=popup_info.value
  preview.locator('#draftReturn').wait_for(state='visible')
  assert preview.locator('.card').count()==9
- assert not preview.locator('#add').is_visible()
+ assert not preview.locator('#addText').is_visible()
  preview.close()
  page.reload();page.locator('.edit-card').first.wait_for();assert page.locator('.edit-card').count()==9
  page.locator('#publish').click();assert 'not connected' in page.locator('#publishStatus').inner_text();page.locator('#publishDialog .close').click()
@@ -67,22 +67,21 @@ with sync_playwright() as p:
  page.goto(os.environ.get('BOARD_TEST_URL','http://localhost:3200/redstring/'))
  page.locator('#welcome').wait_for(state='visible');page.locator('#enterBoard').click()
  page.get_by_role('button',name='Claude',exact=True).click()
- assert not page.locator('#detailContent h2').is_visible()
- page.locator('#flip').click();assert 'Shared cluster context' in page.locator('#detailContent').inner_text()
- page.locator('#flip').click();page.locator('.cluster-gallery button').filter(has_text='Claude').click()
- assert not page.locator('#detailContent h2').is_visible()
- page.locator('#flip').click();assert 'Added by' in page.locator('#detailContent').inner_text()
- # Real uploaded photos must be visible on the front and absent on the reverse.
+ assert 'Thinking machines' in page.locator('#focusTitle').inner_text()
+ assert not page.locator('#detail').is_visible()
+ page.locator('#focusTitle').click()
+ assert 'Shared cluster context' in page.locator('#detailContent').inner_text()
+ page.get_by_role('button',name='Examine Claude',exact=True).click()
+ assert 'Claude' in page.locator('#detailContent h2').inner_text()
+ assert 'Added by' in page.locator('#detailContent').text_content()
  page.locator('#detail .close').click()
  page.get_by_role('button',name='Watching & being watched',exact=True).click()
- assert page.locator('#detailContent > img').is_visible()
- assert not page.locator('#detailContent h2').is_visible()
- assert 'Added by' not in page.locator('#detailContent').inner_text()
- page.locator('#flip').click()
- assert page.locator('#detailContent > img').count()==0
- assert 'Added by' in page.locator('#detailContent').inner_text()
- page.locator('#flip').click()
- assert page.locator('#detailContent > img').is_visible()
+ assert not page.locator('#detail').is_visible()
+ page.locator('#focusTitle').click()
+ assert page.locator('#evidenceImage > img').is_visible()
+ assert 'Added by' in page.locator('#detailContent').text_content()
+ page.locator('#detail .close').click()
+ assert page.locator('.card.lifted').count()==0
  assert not errors,errors
  print('Browser passed: rotation, resizing, drag, PNG transparency format, cluster creation, edge strings, draft restoration, publish gating, welcome and combined/individual flips.')
  browser.close()

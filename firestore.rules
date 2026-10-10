@@ -16,20 +16,36 @@ service cloud.firestore {
         d.x is number && d.x >= 0 && d.x <= 1400 &&
         d.y is number && d.y >= 0 && d.y <= 850 &&
         d.links is list && d.links.size() <= 20 && d.createdAt is timestamp &&
+        (!('sourceUrl' in d) || (d.sourceUrl is string && d.sourceUrl.size() <= 2000 && (d.sourceUrl == '' || d.sourceUrl.matches('https?://[^\\s]+')))) &&
+        (!('articleText' in d) || (d.articleText is string && d.articleText.size() <= 20000)) &&
+        (!('width' in d) || (d.width is number && d.width >= 40 && d.width <= 900)) &&
+        (!('height' in d) || (d.height is number && d.height >= 40 && d.height <= 900)) &&
+        (!('rotation' in d) || (d.rotation is number && d.rotation >= -360 && d.rotation <= 360)) &&
         d.content is string && d.content.size() > 0 &&
         ((d.kind == 'note' && d.content.size() <= 4000) ||
          (d.kind == 'link' && d.content.size() <= 2000 && d.content.matches('https?://[^\\s]+')) ||
          (d.kind == 'image' && d.content.size() <= 200000 && d.content.matches('data:image/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+')));
+    }
+    match /settings/sideboard {
+      allow read: if true;
+      allow write: if teacher() && request.resource.data.keys().hasOnly(['openUntil']) && request.resource.data.openUntil is timestamp && request.resource.data.openUntil <= request.time + duration.value(1,'h');
+    }
+    match /sideboard/{id} {
+      allow read: if true;
+      allow create: if request.auth != null && get(/databases/$(database)/documents/settings/sideboard).data.openUntil > request.time && request.resource.data.keys().hasOnly(['name','text','submitterUid','createdAt']) && request.resource.data.submitterUid == request.auth.uid && request.resource.data.createdAt == request.time && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80 && request.resource.data.text is string && request.resource.data.text.size() > 0 && request.resource.data.text.size() <= 2000;
+      allow delete: if teacher();
     }
     match /settings/access {
       allow get: if teacher();
       allow list, write: if false;
     }
     match /submissions/{id} {
-      allow create: if request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt']) &&
-        validItem(request.resource.data) && request.resource.data.createdAt == request.time;
-      allow read, delete: if teacher();
-      allow update: if false;
+      function own(){return request.auth != null && resource.data.submitterUid == request.auth.uid;}
+      function validPending(){return request.auth != null && request.resource.data.submitterUid == request.auth.uid && request.resource.data.status == 'pending' && validItem(request.resource.data) && request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt','sourceUrl','articleText','width','height','rotation','submitterUid','status']);}
+      allow create: if validPending() && request.resource.data.createdAt == request.time;
+      allow read: if teacher() || own();
+      allow update: if own() && validPending() && request.resource.data.createdAt == resource.data.createdAt;
+      allow delete: if teacher();
     }
     match /layouts/main {
       allow read: if true;
@@ -49,7 +65,7 @@ service cloud.firestore {
     match /published/{id} {
       allow read: if true;
       allow create, update: if teacher() && validItem(request.resource.data) &&
-        request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt','approvedAt']) &&
+        request.resource.data.keys().hasOnly(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt','sourceUrl','articleText','width','height','rotation','approvedAt']) &&
         request.resource.data.approvedAt == request.time;
       allow delete: if teacher();
     }

@@ -9,7 +9,7 @@ An explorable classroom corkboard hosted on GitHub Pages. No software installati
 3. Open **Actions → Publish board to GitHub Pages**. If the initial run failed before Pages was enabled, use **Re-run all jobs**, or **Run workflow** on `main`.
 4. When deployment finishes, open **https://mrrobertpino.github.io/redstring/**.
 
-The board loads immediately without Firebase. It currently uses text placeholders arranged from the supplied photo. You can pan, zoom, flip cards, explore clusters, follow threads, and preview student drafts. Shared submissions and teacher sign-in remain disabled until the steps below are complete.
+The board loads immediately without Firebase. It currently uses text placeholders arranged from the supplied photo. You can pan, zoom, examine cards, explore clusters, follow threads, and preview student drafts. Shared submissions and teacher sign-in remain disabled until the steps below are complete.
 
 ## Connect Firebase, entirely in your browser
 
@@ -35,7 +35,7 @@ Optional for developers only: Node.js 22+, `npm start`, `npm test`. Production d
 
 Open **Teacher space → Open visual board editor**, or visit `editor.html` on the site. It works as a local draft editor even before Firebase is fully configured. Drop PNG/JPEG/WebP files onto the corkboard or choose **Add images**. PNG transparency is preserved. Drag an image to move it, drag its bottom-right handle to resize it, and drag the handle above it to rotate. Holding Shift while rotating snaps to 15-degree increments. You can also type a width or rotation in the inspector. Click **Draw strings**, then drag from the edge of one image to the edge of another; anchors move with image rotation and scaling. Click a string to remove it.
 
-Shift-click images to select several, then choose **Group selected images**. Give the cluster a title and shared context. Each image keeps its own name, date, title, and reason. On the public board, clicking a grouped image opens the cluster; **Flip cluster** shows the combined context. Clicking an image inside the cluster opens its individual flip. Ungrouped images open individually. Use **Ungroup** to make images independent again.
+Shift-click images to select several, then choose **Group selected images**. Give the cluster a title and shared context. Each image keeps its own name, date, title, and reason. On the public board, clicking a grouped image opens the cluster; click the faint title to examine its combined information card. Clicking an image inside the cluster opens its individual information card. Ungrouped images open individually. Use **Ungroup** to make images independent again.
 
 Changes autosave locally when browser storage permits, with undo/redo and downloadable backups. **Publish board** requires a teacher account and writes images plus the arrangement in one atomic Firebase batch. Local drafts are never automatically shown to students. Restore a downloaded backup to move a draft between browsers. A saved local draft takes precedence over the live board until replaced; coordinate edits if several teachers share the board. Images are compressed to fit Firestore, so keep your original files separately. Very large updates should be split into smaller publishes.
 
@@ -66,3 +66,17 @@ New strings record an ISO creation time and a monotonically increasing `order`. 
 Open **Tool button sizes & images** in the inspector to resize each dock button independently (44–160 pixels), or upload the actual spool/pin-box icon PNGs. The bundled defaults are drawn SVG illustrations. Icon appearance and extra pins save in the local draft, backup and published layout. Public visitors can see the pins and strings; authoring tools remain in the teacher studio.
 
 Before publishing the new pin/tool fields, replace the Firestore Rules tab contents with the latest complete `firestore.rules` and click **Publish**. Existing teacher-only write permissions remain in place. Live Firebase publishing cannot be verified from this environment; browser interaction checks and seven Node tests pass.
+
+
+## Private student webs and Sideboard
+Enable **Authentication → Sign-in method → Anonymous** as well as Email/Password, then publish the complete current `firestore.rules`. Students need no account form: Firebase assigns their browser an identity. Pending submissions are readable only by that identity and teachers; published items are readable by everyone. Returning in the same browser restores pending ideas. Clearing browser data or switching browsers loses access to that anonymous identity. Local unsent drafts are browser-local, so use a separate browser profile on shared computers.
+
+Use **Picture**, **Text**, or **Link → Place on board** to build several private ideas and connections, then **Send drafts for approval**. Pending items have a label and can be dragged again; submitted placement changes save to Firebase. Teachers can approve the proposed position or choose **Arrange in studio**, edit it, and publish. Replace the image with a scanned cutout afterward to preserve identity and connections.
+
+**Explore tools → The Sideboard** is a separate public discussion area. It is closed by default. In Teacher space, open it for up to one hour or close it immediately. Posts become public immediately and teachers can remove them. It accepts plain text only; do not open it for an unrestricted audience unless you are ready to moderate. The database checks the closing time even if a browser's clock is incorrect. The main board always requires teacher approval.
+
+Exploration now frames items or clusters before opening an image beside its metadata card. Source links and manually supplied article text are supported; articles are not fetched automatically. Splay is a temporary packed layout. The timeline filters recorded additions of current pieces and strings, and does not reconstruct deleted items or previous arrangements. Copyright links to robertpino.com appear on the board and teacher studio.
+
+Quick entry uses a name and content, with optional title and picture/link description. Placing an item sends it privately for review when Firebase is available; otherwise it stays local for retry. Tap your item and choose **Connect with red string**, then tap another item. Connections are optional. Picture URLs require the source website to permit cross-origin downloads; file upload is the fallback.
+
+On desktop, **Place on board** returns to the board: tap a position, choose **Place at top left**, or wait eight seconds for the default placement. Default items form a row from the top left. On screens up to 650px wide, placement is automatic and the item is sent privately immediately. Students need only content and their name; titles/descriptions and connections are optional.
