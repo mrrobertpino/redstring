@@ -2,9 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function teacher() {
-      return request.auth != null &&
-        exists(/databases/$(database)/documents/settings/access) &&
-        request.auth.uid in get(/databases/$(database)/documents/settings/access).data.teacherUids;
+      return request.auth != null && request.auth.uid == 'iUeZkMpKJnQz1Sc1GyxU5zNgSrb2';
     }
     function validItem(d) {
       return d.keys().hasAll(['title','name','reason','kind','content','x','y','cluster','links','date','createdAt']) &&
