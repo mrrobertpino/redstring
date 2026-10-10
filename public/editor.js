@@ -1,8 +1,8 @@
-import {initializePins,localAnchor,addPin,connectPins,pinPosition,orderedStrings} from './pins.js?v=20261010-3';
-import {surface,fitScene,appendThread,BOARD} from './scene.js?v=20261010-3';
-import * as firebase from './firebase.js?v=20261010-3';
-import {mergeBoard,validateSubmission} from './model.js?v=20261010-3';
-import {dimensions,anchorPoint,edgeAnchor,bounds,applyLayout,makeLayout,validateLayout} from './geometry.js?v=20261010-3';
+import {initializePins,localAnchor,addPin,connectPins,pinPosition,orderedStrings} from './pins.js?v=20261010-5';
+import {surface,fitScene,appendThread,BOARD} from './scene.js?v=20261010-5';
+import * as firebase from './firebase.js?v=20261010-5';
+import {mergeBoard,validateSubmission} from './model.js?v=20261010-5';
+import {dimensions,anchorPoint,edgeAnchor,bounds,applyLayout,makeLayout,validateLayout} from './geometry.js?v=20261010-5';
 const $=s=>document.querySelector(s),vp=$('#editViewport'),world=$('#editWorld');let board,baseIds=[],selected=new Set(),scale=1,tx=0,ty=0,connecting=false,history=[],future=[],clusterEdit=null,dirtyItems=new Set(),saving=false,seedBoard,tool='move',pendingPin=null;
 const clone=value=>JSON.parse(JSON.stringify(value));
 const node=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n};

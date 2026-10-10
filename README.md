@@ -82,3 +82,5 @@ Quick entry uses a name and content, with optional title and picture/link descri
 On desktop, **Place on board** returns to the board: tap a position, choose **Place at top left**, or wait eight seconds for the default placement. Default items form a row from the top left. On screens up to 650px wide, placement is automatic and the item is sent privately immediately. Students need only content and their name; titles/descriptions and connections are optional.
 
 Teacher access now uses the owner's Firebase UID directly in `teacher()` in `firestore.rules`: `iUeZkMpKJnQz1Sc1GyxU5zNgSrb2`. Publish the complete current rules in project redstring-d8b91. The old settings/access document is no longer needed for access. Sign-in verifies permission with a server read of the review queue before opening the studio; only the rules grant teacher access.
+
+The public board has no teacher button. Bookmark `/redstring/editor/` (or `editor.html`) to open the studio. Sign in when publishing; use **Review submissions** inside the studio for the approval queue and Sideboard controls.
