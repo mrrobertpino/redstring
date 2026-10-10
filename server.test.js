@@ -22,8 +22,8 @@ test('published contributions merge with seed and add valid connections',async()
 test('GitHub Pages subpath serves the board with relative assets and no API',async()=>{
  const child=spawn(process.execPath,['server.js'],{env:{...process.env,PORT:'3198'}});
  try{await new Promise((resolve,reject)=>{child.stdout.once('data',resolve);child.once('error',reject);child.once('exit',()=>reject(Error('Server exited early')))});
- const base='http://localhost:3198/redstring/';const page=await fetch(base);assert.equal(page.status,200);const html=await page.text();assert.ok(html.includes('href="./style.css"'));assert.ok(html.includes('src="./app.js"'));
- for(const file of ['app.js','firebase.js','firebase-config.js','model.js','style.css','board.json'])assert.equal((await fetch(base+file)).status,200,file);
+ const base='http://localhost:3198/redstring/';const page=await fetch(base);assert.equal(page.status,200);const html=await page.text();assert.match(html,/href="\.\/style\.css(?:\?[^"]*)?"/);assert.match(html,/src="\.\/app\.js(?:\?[^"]*)?"/);
+ for(const file of ['app.js','app.js?v=20261010-3','firebase.js','firebase-config.js','model.js','style.css','style.css?v=20261010-3','board.json'])assert.equal((await fetch(base+file)).status,200,file);
  const board=await (await fetch(base+'board.json')).json();assert.equal(board.items.length,8);
  const app=await (await fetch(base+'app.js')).text();assert.ok(!app.includes('/api/'));
  assert.equal((await fetch(base+'../firestore.rules')).status,404);
